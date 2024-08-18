@@ -1,0 +1,111 @@
+body {
+    font-family: 'Segoe UI';
+    background-color: rgb(255, 255, 255);
+}
+
+#chat {
+    bottom: 200px;
+}
+
+#chat-input {
+    width: 100%;
+    height: 130px;
+    background-color: rgb(123, 138, 153);
+    position: fixed;
+    border-top: 10px;
+    border-color: rgb(123, 138, 153);
+    bottom: 0;
+    left: 0;
+}
+
+#chat-input-text {
+    font-family: 'Segoe UI';
+    position: relative;
+    top: 10px;
+    border: none;
+    bottom: 0;
+    left: 3px;
+    border-radius: 8px;
+}
+
+#chat-input-send {
+    position: relative;
+    left: 7px;
+    top: -70px;
+    height: 35px;
+    width: 35px;
+    border: none;
+    border-radius: 17.5px;
+    background-color: rgb(143, 175, 226);
+}
+
+#chat-input-send:hover {
+    background-color: rgb(123,155,206);
+}
+
+#chat-input-file {
+    position: relative;
+    left: 6px;
+    top: -40px;
+    height: 35px;
+    width: 35px;
+    border: none;
+    border-radius: 17.5px;
+    background-color: rgb(143, 175, 226);
+    opacity: 0.5;
+}
+
+#chat-input-file:hover {
+    opacity: 1;
+    background-color: rgb(123,155,206);
+}
+
+#filename {
+    position: relative;
+    font-size: 12px;
+    top: 0;
+}
+
+.system{
+    position: relative;
+    border: 2px solid rgb(206, 164, 74);
+    border-radius: 8px;
+    max-width: 90%;
+    text-align: center;
+}
+
+.user-message {
+    position: relative;
+    border: 3px solid rgb(33, 62, 190);
+    border-radius: 8px;
+    max-width: 90%;
+    text-align: right;
+    padding: 8px;
+}
+
+.messageshow {
+    animation-name: msgShow;
+    animation-duration: 0.75s;
+}
+
+@keyframes msgShow {
+    0% {
+        opacity: 0;
+        top: 30px;
+    }
+    100% {
+        opacity: 1;
+        top: 0;
+    }
+}
+
+.ai-message {
+    position: relative;
+    border: 3px solid rgb(15, 97, 56);
+    border-radius: 8px;
+    max-width: 90%;
+    text-align: left;
+    padding: 8px;
+    bottom: 200px;
+    top: 10px
+}
