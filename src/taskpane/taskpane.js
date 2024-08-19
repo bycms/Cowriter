@@ -73,6 +73,7 @@ async function callAI(msg) {
         parts: [{ text: "You are a writing assistant in Microsoft Word. Follow the user's instructions unless illegal. " +
                         "If asked to write a passage, begin your response with 'INDOC=YES' BEFORE ANYTHING and then write the passage ONLY, NO OTHER TEXT (GREETINGS, PERMITTING, ETC.) ALLOWED." +
                         "If not, respond accordingly. If unsure, ask the user to clarify. Make full use of the below history chat." +
+                        "For example, if latest history includes sth about Windows 10 and user mentions the next version now, you should know he/she means Windows 11" +
                         "This is the last message you sent to your user:" + history_1 +
                         "And this is the second last message you sent to your user:" + history_2
          }],
