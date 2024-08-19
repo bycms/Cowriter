@@ -1,6 +1,3 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import markdownIt from 'markdown-it';
-//require('dotenv').config();
 
 
 let welcome = document.getElementsByClassName("system");
