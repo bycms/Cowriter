@@ -1,3 +1,4 @@
+import { GoogleGenerativeAI } from '/node_modules/@google/generative-ai';
 
 
 let welcome = document.getElementsByClassName("system");
