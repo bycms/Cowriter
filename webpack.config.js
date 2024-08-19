@@ -7,8 +7,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const urlDev = "https://localhost:3000/";
 const urlProd = "https://www.contoso.com/"; // CHANGE THIS TO YOUR PRODUCTION DEPLOYMENT LOCATION
 
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
-
 async function getHttpsOptions() {
   const httpsOptions = await devCerts.getHttpsServerOptions();
   return { ca: httpsOptions.ca, key: httpsOptions.key, cert: httpsOptions.cert };
@@ -27,7 +25,6 @@ module.exports = async (env, options) => {
       clean: true,
     },
     resolve: {
-      fallback: { "os": false  }
       extensions: [".html", ".js"],
     },
     module: {
@@ -57,7 +54,6 @@ module.exports = async (env, options) => {
       ],
     },
     plugins: [
-      new NodePolyfillPlugin()
       new HtmlWebpackPlugin({
         filename: "taskpane.html",
         template: "./src/taskpane/taskpane.html",
