@@ -31,8 +31,16 @@
 </body>
 
 <script type="text/javascript" src="./taskpane.js"></script>
-<script type="module">
-    import markdownIt from '/node_modules/markdown-it'
+<script type="importmap">
+    {
+      "imports": {
+        "@google/generative-ai": "https://esm.run/@google/generative-ai"
+      }
+    }
 </script>
+<script type="module">
+    import markdownIt from 'https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/+esm'
+</script>
+<script type="text/javascript" src="./taskpane.js"></script>
 
 </html>
