@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI } from '/node_modules/@google/generative-ai';
-
+import markdownIt from '/node_modules/markdownit'; 
 
 let welcome = document.getElementsByClassName("system");
 let textbox = document.getElementById("chat-input-text");
