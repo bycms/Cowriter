@@ -1,5 +1,5 @@
-import { GoogleGenerativeAI } from '/node_modules/@google/generative-ai';
-import markdownIt from '/node_modules/markdown-it';
+const { GoogleGenerativeAI } = require('@google/generative-ai');
+const markdownIt = require('markdown-it');
 
 let welcome = document.getElementsByClassName("system");
 let textbox = document.getElementById("chat-input-text");
@@ -13,6 +13,8 @@ let file_name = document.getElementById("filename");
 let API_KEY = 'AIzaSyD8IWCVHh3DMxPcN0BjKG-rpXXnIFlll2s';
 let i=-1;  let j=-1;
 setTimeout(function(){welcome[0].classList.remove('messageshow')},1000);
+
+let history_1 = '', history_2 = '';
 
 Office.onReady((info) => {
   if (info.host === Office.HostType.Word) {
@@ -29,7 +31,8 @@ function newUserMessage() {
 }
 
 function newAIMessage(content){
-  chatArea.innerHTML += '<br><div class="ai-message messageshow">' + content + '</div>';
+  chatArea.innerHTML += '<br><div class="ai-message messageshow">' + content + '</div><br><br><br><br><br><br><br><br>'
+
   setTimeout(function(){
     aimsg[j].classList.remove("messageshow");
   }, 5000)
@@ -68,8 +71,10 @@ async function callAI(msg) {
       history: [{
         role: "user",
         parts: [{ text: "You are a writing assistant in Microsoft Word. Follow the user's instructions unless illegal. " +
-                        "If asked to write a passage, begin your response with 'INDOC=YES' and then write the passage WITHOUT any interactive responses. (e.g. Sure, I can help you with that.)" +
-                        "If not, respond accordingly. If unsure, ask the user to clarify."
+                        "If asked to write a passage, begin your response with 'INDOC=YES' BEFORE ANYTHING and then write the passage ONLY, NO OTHER TEXT (GREETINGS, PERMITTING, ETC.) ALLOWED." +
+                        "If not, respond accordingly. If unsure, ask the user to clarify. Make full use of the below history chat." +
+                        "This is the last message you sent to your user:" + history_1 +
+                        "And this is the second last message you sent to your user:" + history_2
          }],
       },
       {
@@ -78,7 +83,7 @@ async function callAI(msg) {
       },
       ],
     });
-  
+    
     let result = await chat.sendMessageStream(msg);
     let buffer = [];
     let md = new markdownIt();
@@ -88,6 +93,8 @@ async function callAI(msg) {
     let message = md.render(buffer.join(''));
     let outContent = message.replace(/Passage_generated:/g, '');
     newAIMessage(outContent);
+    history_1 = outContent;
+    history_2 = history_1;
   }
   catch(e){
     newAIMessage(e);

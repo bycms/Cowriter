@@ -4,7 +4,7 @@ body {
 }
 
 #chat {
-    bottom: 200px;
+    border: none;
 }
 
 #chat-input {
@@ -107,5 +107,5 @@ body {
     text-align: left;
     padding: 8px;
     bottom: 200px;
-    top: 10px
+    top: 10px;
 }
