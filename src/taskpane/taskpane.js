@@ -13,15 +13,18 @@ let API_KEY = 'AIzaSyD8IWCVHh3DMxPcN0BjKG-rpXXnIFlll2s';
 let i=-1;  let j=-1;
 setTimeout(function(){welcome[0].classList.remove('messageshow')},1000);
 
+let outContent;
 let history_1 = '', history_2 = '';
 const fileReader = new FileReader();
 let fileContent;
 let isFileSelected = false;
 
-/*Office.onReady((info) => {
+Office.onReady((info) => {
   if (info.host === Office.HostType.Word) {
+
+    }     
   }
-});*/
+);
 
 fileReader.onload = function(e) {
   fileContent = e.target.result;
@@ -112,22 +115,25 @@ async function callAI(msg) {
       buffer.push(response.text());
     }
     let message = md.render(buffer.join(''));
-    let outContent = message.replace(/Passage_generated:/g, '');
+    outContent = message.replace(/Passage_generated:/g, '');
     newAIMessage(outContent.replace(/INDOC=YES/g, '' ));
     history_1 = outContent;
     history_2 = history_1;
-    insertHTML(outContent.replace(/INDOC=YES/g, '' ))
+    if (outContent.includes("INDOC=YES")){
+      insertHTML(outContent.replace(/INDOC=YES/g, '' ))
+    }
   }
   catch(e){
     newAIMessage(e);
   }
 }
 
-async function insertHTML(html) {
-  await Word.run(async (context) => {
-    const blankParagraph = context.document.body.paragraphs.getLast().insertParagraph("", Word.InsertLocation.after); 
-    blankParagraph.insertHtml(html, Word.InsertLocation.after)
+export async function insertHTML(html) {
+  return Word.run(async (context) => {
+    let paragraph = '';
+    // insert a paragraph at the end of the document.
+    paragraph = context.document.body.insertHtml(html, Word.InsertLocation.end);
     
     await context.sync();
- } )
-} 
+  });
+}
