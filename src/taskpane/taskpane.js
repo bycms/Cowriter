@@ -54,15 +54,18 @@ sendButton.onclick = function () {
   }
 }
 
-fileButton.addEventListener("click", function () {
+/*fileButton.addEventListener("click", function () {
   selectFile.click();
-})
+})*/
 
 selectFile.addEventListener("change", function (event) {
   const file = event.target.files[0];
-  if (file) {
+  if (file.name.length > 0 && file.name.length < 25) {
   file_name.textContent = file.name;
  } 
+  else if (file.name.length > 15) {
+  file_name.textContent = file.name.slice(0, 23) + "...";
+ }
   else {
   file_name.textContent = "No File Selected.";
 } 

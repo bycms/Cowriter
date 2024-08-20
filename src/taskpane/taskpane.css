@@ -62,8 +62,13 @@ body {
 
 #filename {
     position: relative;
-    font-size: 12px;
-    top: 0;
+    font-size: 14px;
+    left: 20px;
+    top: -45px;
+    opacity: 0.6;
+    border: 0.5px solid grey;
+    border-radius: 4px;
+    padding: 5px;
 }
 
 .system{
