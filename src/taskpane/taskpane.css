@@ -52,7 +52,7 @@ body {
     border: none;
     border-radius: 17.5px;
     background-color: rgb(143, 175, 226);
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 #chat-input-file:hover {
