@@ -125,7 +125,7 @@ async function callAI(msg) {
     history_1 = outContent;
     history_2 = history_1;
     if (outContent.includes("INDOC=YES")){
-      //insertHTML(outContent.replace(/INDOC=YES/g, ' ' ))
+      insertHTML(outContent.replace(/INDOC=YES/g, ' ' ))
     }
   }
   catch(e){
@@ -133,7 +133,7 @@ async function callAI(msg) {
   }
 }
 
-/*export async function insertHTML(html) {
+export async function insertHTML(html) {
   return Word.run(async (context) => {
     let paragraph = '';
     // insert a paragraph at the end of the document.
@@ -141,4 +141,4 @@ async function callAI(msg) {
     
     await context.sync();
   });
-}*/
+}
