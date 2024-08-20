@@ -4,7 +4,6 @@ const markdownIt = require('markdown-it');
 let welcome = document.getElementsByClassName("system");
 let textbox = document.getElementById("chat-input-text");
 let sendButton = document.getElementById("chat-input-send");
-let fileButton = document.getElementById("chat-input-file");
 let selectFile = document.getElementById("file-input");
 let chatArea = document.getElementById("chat");
 let usermsg = document.getElementsByClassName("user-message");
@@ -15,11 +14,18 @@ let i=-1;  let j=-1;
 setTimeout(function(){welcome[0].classList.remove('messageshow')},1000);
 
 let history_1 = '', history_2 = '';
+const fileReader = new FileReader();
+let fileContent;
+let isFileSelected = false;
 
-Office.onReady((info) => {
+/*Office.onReady((info) => {
   if (info.host === Office.HostType.Word) {
   }
-});
+});*/
+
+fileReader.onload = function(e) {
+  fileContent = e.target.result;
+}
 
 function newUserMessage() {
   chatArea.innerHTML += '<br><div class="user-message messageshow">' + textbox.value + '</div>';
@@ -42,7 +48,12 @@ function newAIMessage(content){
 sendButton.onclick = function () {
   if (textbox.value !== ''){
     newUserMessage();
-    callAI(textbox.value);
+    if (isFileSelected == true) {
+      callAI(textbox.value + "...Here's the document to refer on:" + fileContent);
+    }
+    else{
+      callAI(textbox.value);
+    }
   
     textbox.value = "";
   }
@@ -54,17 +65,17 @@ sendButton.onclick = function () {
   }
 }
 
-/*fileButton.addEventListener("click", function () {
-  selectFile.click();
-})*/
-
 selectFile.addEventListener("change", function (event) {
   const file = event.target.files[0];
   if (file.name.length > 0 && file.name.length < 25) {
   file_name.textContent = file.name;
+  fileReader.readAsText(file);
+  isFileSelected = true;
  } 
   else if (file.name.length > 15) {
   file_name.textContent = file.name.slice(0, 23) + "...";
+  fileReader.readAsText(file);
+  isFileSelected = true;
  }
   else {
   file_name.textContent = "No File Selected.";
@@ -118,5 +129,5 @@ async function insertHTML(html) {
     blankParagraph.insertHtml(html, Word.InsertLocation.after)
     
     await context.sync();
-               } )
+ } )
 } 
