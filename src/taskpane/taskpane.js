@@ -59,8 +59,13 @@ fileButton.addEventListener("click", function () {
 })
 
 selectFile.addEventListener("change", function (event) {
-  const fileName = event.target.files.name;
-  file_name.innerHTML = fileName;
+  const file = event.target.files[0];
+  if (file) {
+  file_name.textContent = file.name;
+ } 
+  else {
+  file_name.textContent = "No File Selected.";
+} 
 })
 
 async function callAI(msg) {
@@ -94,19 +99,21 @@ async function callAI(msg) {
     }
     let message = md.render(buffer.join(''));
     let outContent = message.replace(/Passage_generated:/g, '');
-    newAIMessage(outContent);
+    newAIMessage(outContent.replace(/INDOC=YES/g, '' ));
     history_1 = outContent;
     history_2 = history_1;
-    tryCatch(gotoWord(outContent));
+    insertHTML(outContent.replace(/INDOC=YES/g, '' ))
   }
   catch(e){
     newAIMessage(e);
   }
 }
 
-async function gotoWord(html){
+async function insertHTML(html) {
   await Word.run(async (context) => {
-    const toInsert = context.document.body.paragraphs.getLast().insertParagraph("", Word.InsertLocation.after);
-    toInsert.insertHtml(html);
-  });
-}
+    const blankParagraph = context.document.body.paragraphs.getLast().insertParagraph("", Word.InsertLocation.after); 
+    blankParagraph.insertHtml(html, Word.InsertLocation.after)
+    
+    await context.sync();
+               } )
+} 
