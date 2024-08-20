@@ -5,6 +5,7 @@ let welcome = document.getElementsByClassName("system");
 let textbox = document.getElementById("chat-input-text");
 let sendButton = document.getElementById("chat-input-send");
 let selectFile = document.getElementById("file-input");
+let GUIButton = document.getElementById("chat-input-file");
 let chatArea = document.getElementById("chat");
 let usermsg = document.getElementsByClassName("user-message");
 let aimsg = document.getElementsByClassName("ai-message");
@@ -40,12 +41,16 @@ function newUserMessage() {
 }
 
 function newAIMessage(content){
-  chatArea.innerHTML += '<br><div class="ai-message messageshow">' + content + '</div><br><br><br><hr><hr><br><br><br>'
+  chatArea.innerHTML += '<br><div class="ai-message messageshow">' + content + '</div><br><br><hr><hr><br><br><br>'
 
   setTimeout(function(){
     aimsg[j].classList.remove("messageshow");
   }, 5000)
   j++;
+}
+
+GUIButton.onclick =()=> {
+  selectFile.click();
 }
 
 sendButton.onclick = function () {
@@ -75,7 +80,7 @@ selectFile.addEventListener("change", function (event) {
   fileReader.readAsText(file);
   isFileSelected = true;
  } 
-  else if (file.name.length > 15) {
+  else if (file.name.length >= 25) {
   file_name.textContent = file.name.slice(0, 23) + "...";
   fileReader.readAsText(file);
   isFileSelected = true;
@@ -93,7 +98,7 @@ async function callAI(msg) {
       history: [{
         role: "user",
         parts: [{ text: "You are a writing assistant in Microsoft Word. Follow the user's instructions unless illegal. " +
-                        "If asked to write a passage, begin your response with 'INDOC=YES' BEFORE ANYTHING and then write the passage ONLY, NO OTHER TEXT (GREETINGS, PERMITTING, ETC.) ALLOWED." +
+                        "If asked to write or edit a passage, begin your response with 'INDOC=YES' BEFORE ANYTHING and then write the passage ONLY, NO OTHER TEXT (GREETINGS, PERMITTING, ETC.) ALLOWED." +
                         "Your passage must be formal (unless user told you not to) and start with a title." +
                         "If not, respond accordingly. If unsure, ask the user to clarify. Make full use of the below history chat." +
                         "For example, if latest history includes sth about Windows 10 and user mentions the next version now, you should know he/she means Windows 11" +
