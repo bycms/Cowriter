@@ -125,7 +125,7 @@ async function callAI(msg) {
     history_1 = outContent;
     history_2 = history_1;
     if (outContent.includes("INDOC=YES")){
-      insertHTML(outContent.replace(/INDOC=YES/g, '' ))
+      insertHTML(outContent.replace(/INDOC=YES/g, ' ' ))
     }
   }
   catch(e){
