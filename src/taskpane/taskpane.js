@@ -93,10 +93,10 @@ async function callAI(msg) {
     }
     let message = md.render(buffer.join(''));
     let outContent = message.replace(/Passage_generated:/g, '');
-    newAIMessage(outContent);
+    newAIMessage(outContent.replace(/INDOC=YES/g, '' ));
     history_1 = outContent;
     history_2 = history_1;
-    insertHTML(outContent)
+    insertHTML(outContent.replace(/INDOC=YES/g, '' ))
   }
   catch(e){
     newAIMessage(e);
