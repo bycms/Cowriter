@@ -10,10 +10,10 @@ body {
 #chat-input {
     width: 100%;
     height: 130px;
-    background-color: rgb(123, 138, 153);
+    background-color: rgb(173, 188, 203);
     position: fixed;
     border-top: 10px;
-    border-color: rgb(123, 138, 153);
+    border-color: rgb(173, 188, 203);
     bottom: 0;
     left: 0;
 }
