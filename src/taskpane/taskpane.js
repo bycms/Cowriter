@@ -96,8 +96,18 @@ async function callAI(msg) {
     newAIMessage(outContent);
     history_1 = outContent;
     history_2 = history_1;
+    insertHTML(outContent)
   }
   catch(e){
     newAIMessage(e);
   }
 }
+
+async function insertHTML(html) {
+  await Word.run(async (context) => {
+    const blankParagraph = context.document.body.paragraphs.getLast().insertParagraph("", Word.InsertLocation.after); 
+    blankParagraph.insertHtml(html, Word.InsertLocation.after)
+    
+    await context.sync();
+               } )
+} 
