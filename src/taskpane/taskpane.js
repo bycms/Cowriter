@@ -59,8 +59,13 @@ fileButton.addEventListener("click", function () {
 })
 
 selectFile.addEventListener("change", function (event) {
-  const fileName = event.target.files.name;
-  file_name.innerHTML = fileName;
+  const file = event.target.files[0];
+  if (file) {
+  file_name.textContent = file.name;
+ } 
+  else {
+  file_name.textContent = "No File Selected.";
+} 
 })
 
 async function callAI(msg) {
