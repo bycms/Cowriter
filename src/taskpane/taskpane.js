@@ -5,7 +5,7 @@ let welcome = document.getElementsByClassName("system");
 let textbox = document.getElementById("chat-input-text");
 let sendButton = document.getElementById("chat-input-send");
 let selectFile = document.getElementById("file-input");
-let GUIButton = document.getElementById("chat-input-file");
+let fileButton = document.getElementById("chat-input-file");
 let chatArea = document.getElementById("chat");
 let usermsg = document.getElementsByClassName("user-message");
 let aimsg = document.getElementsByClassName("ai-message");
@@ -49,9 +49,26 @@ function newAIMessage(content){
   j++;
 }
 
-GUIButton.onclick =()=> {
+fileButton.onclick =()=> {
   selectFile.click();
 }
+
+selectFile.addEventListener("change", function (event) {
+  const file = event.target.files[0];
+  if (file.name.length > 0 && file.name.length < 25) {
+  file_name.textContent = file.name;
+  fileReader.readAsText(file);
+  isFileSelected = true;
+ } 
+  else if (file.name.length >= 25) {
+  file_name.textContent = file.name.slice(0, 23) + "...";
+  fileReader.readAsText(file);
+  isFileSelected = true;
+ }
+  else {
+  file_name.textContent = "No File Selected.";
+} 
+})
 
 sendButton.onclick = function () {
   if (textbox.value !== ''){
@@ -72,23 +89,6 @@ sendButton.onclick = function () {
     }, 3000)
   }
 }
-
-selectFile.addEventListener("change", function (event) {
-  const file = event.target.files[0];
-  if (file.name.length > 0 && file.name.length < 25) {
-  file_name.textContent = file.name;
-  fileReader.readAsText(file);
-  isFileSelected = true;
- } 
-  else if (file.name.length >= 25) {
-  file_name.textContent = file.name.slice(0, 23) + "...";
-  fileReader.readAsText(file);
-  isFileSelected = true;
- }
-  else {
-  file_name.textContent = "No File Selected.";
-} 
-})
 
 async function callAI(msg) {
   try{
