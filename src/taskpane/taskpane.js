@@ -31,7 +31,7 @@ function newUserMessage() {
 }
 
 function newAIMessage(content){
-  chatArea.innerHTML += '<br><div class="ai-message messageshow">' + content + '</div><br><br><br><br><br><br><br><br>'
+  chatArea.innerHTML += '<br><div class="ai-message messageshow">' + content + '</div><br><br><br><hr><hr><br><br><br>'
 
   setTimeout(function(){
     aimsg[j].classList.remove("messageshow");
@@ -72,6 +72,7 @@ async function callAI(msg) {
         role: "user",
         parts: [{ text: "You are a writing assistant in Microsoft Word. Follow the user's instructions unless illegal. " +
                         "If asked to write a passage, begin your response with 'INDOC=YES' BEFORE ANYTHING and then write the passage ONLY, NO OTHER TEXT (GREETINGS, PERMITTING, ETC.) ALLOWED." +
+                        "Your passage must be formal (unless user told you not to) and start with a title." +
                         "If not, respond accordingly. If unsure, ask the user to clarify. Make full use of the below history chat." +
                         "For example, if latest history includes sth about Windows 10 and user mentions the next version now, you should know he/she means Windows 11" +
                         "This is the last message you sent to your user:" + history_1 +
@@ -96,8 +97,16 @@ async function callAI(msg) {
     newAIMessage(outContent);
     history_1 = outContent;
     history_2 = history_1;
+    tryCatch(gotoWord(outContent));
   }
   catch(e){
     newAIMessage(e);
   }
+}
+
+async function gotoWord(html){
+  await Word.run(async (context) => {
+    const toInsert = context.document.body.paragraphs.getLast().insertParagraph("", Word.InsertLocation.after);
+    toInsert.insertHtml(html);
+  });
 }
