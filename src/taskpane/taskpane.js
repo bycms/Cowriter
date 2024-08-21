@@ -129,6 +129,7 @@ async function callAI(msg) {
     else {
       newAIMessage(outContent);
     }
+    isItPassage = false;
   }
   catch(e){
     newAIMessage(e);
