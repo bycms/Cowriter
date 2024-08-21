@@ -18,7 +18,6 @@ let history_1 = '', history_2 = '';
 const fileReader = new FileReader();
 let fileContent;
 let isFileSelected = false;
-let isItPassage = false;
 
 Office.onReady((info) => {
   if (info.host === Office.HostType.Word) {
@@ -27,10 +26,12 @@ Office.onReady((info) => {
   }
 );
 
+// File Reader setup
 fileReader.onload = function(e) {
   fileContent = e.target.result;
 }
 
+//Add new user message to chat area
 function newUserMessage() {
   chatArea.innerHTML += '<br><div class="user-message messageshow">' + textbox.value + '</div>';
  
@@ -40,6 +41,7 @@ function newUserMessage() {
   i++;
 }
 
+//Add new response to chat area
 function newAIMessage(content){
   chatArea.innerHTML += '<div class="ai-message messageshow"><p>' + content + '</p></div><br><br><hr><hr><br><br><br>'
 
@@ -49,6 +51,7 @@ function newAIMessage(content){
   j++;
 }
 
+//Edit selected file name
 selectFile.addEventListener("change", function (event) {
   const file = event.target.files[0];
   if (file.name.length > 0 && file.name.length < 25) {
@@ -66,6 +69,14 @@ selectFile.addEventListener("change", function (event) {
 } 
 })
 
+//Shortcut to send message with Ctrl+Enter
+document.addEventListener("keydown", function (event) {
+  if (event.ctrlKey && event.key === 'Enter'){
+    sendButton.click();
+  }
+})
+
+//Prepare and send user message to AI
 sendButton.onclick = function () {
   if (textbox.value !== '' && textbox.value !== 'Enter your request here...'){
     newUserMessage();
@@ -86,6 +97,7 @@ sendButton.onclick = function () {
   }
 }
 
+//Call API
 async function callAI(msg) {
   try{
     const genAI = new GoogleGenerativeAI(API_KEY);
@@ -116,26 +128,25 @@ async function callAI(msg) {
       buffer.push(response.text());
     }
     let message = md.render(buffer.join(''));
+    //store history
     outContent = message;
     history_1 = outContent;
     history_2 = history_1;
     if (outContent.includes("INDOC=YES")){
-      insertHTML(outContent.replace(/INDOC=YES/g, '' ));
-      isItPassage = true;
+      insertHTML(outContent.replace(/INDOC=YES/g, '' ));//Word response
+      newAIMessage('Done. Feel free to let me edit!');
+    } else {
+      newAIMessage(outContent.replace(/INDOC=YES/g, '' ));//Taskpane response
     }
-    if (isItPassage == true) {      
-      newAIMessage(outContent.replace(/INDOC=YES/g,''));
-    }
-    else {
-      newAIMessage(outContent);
-    }
-    isItPassage = false;
+    selectFile.value = '';
+    file_name.textContent = 'Upload your file here';//Reset file selection
   }
   catch(e){
     newAIMessage(e);
   }
 }
 
+//Insert HTML to Word
 export async function insertHTML(html) {
   return Word.run(async (context) => {
     let paragraph = '';

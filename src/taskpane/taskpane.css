@@ -56,7 +56,8 @@ body {
 
 .system{
     position: relative;
-    border: 2px solid rgb(149, 48, 189);
+    border: 3px solid;
+    border-image: linear-gradient(to right, rgb(94, 18, 77), rgb(147, 112, 219)) 1;
     border-radius: 8px;
     max-width: 90%;
     text-align: center;
@@ -64,7 +65,8 @@ body {
 
 .user-message {
     position: relative;
-    border: 3px solid rgb(33, 62, 190);
+    border: 3px solid;
+    border-image: linear-gradient(to right, rgb(100, 149, 237), rgb(42, 24, 141)) 1;
     border-radius: 8px;
     max-width: 90%;
     text-align: right;
@@ -89,7 +91,8 @@ body {
 
 .ai-message {
     position: relative;
-    border: 3px solid rgb(15, 97, 56);
+    border: 3px solid;
+    border-image: linear-gradient(to right, rgb(31, 119, 78), rgb(21, 64, 114)) 1;
     border-radius: 8px;
     max-width: 90%;
     text-align: left;
