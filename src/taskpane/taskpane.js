@@ -18,6 +18,7 @@ let history_1 = '', history_2 = '';
 const fileReader = new FileReader();
 let fileContent;
 let isFileSelected = false;
+let isItPassage = false;
 
 Office.onReady((info) => {
   if (info.host === Office.HostType.Word) {
@@ -40,7 +41,7 @@ function newUserMessage() {
 }
 
 function newAIMessage(content){
-  chatArea.innerHTML += '<br><div class="ai-message messageshow">' + content + '</div><br><br><hr><hr><br><br><br>'
+  chatArea.innerHTML += '<div class="ai-message messageshow"><p>' + content + '</p></div><br><br><hr><hr><br><br><br>'
 
   setTimeout(function(){
     aimsg[j].classList.remove("messageshow");
@@ -94,7 +95,7 @@ async function callAI(msg) {
         role: "user",
         parts: [{ text: "You are a writing assistant in Microsoft Word. Follow the user's instructions unless illegal. " +
                         "If asked to write or edit a passage, begin your response with 'INDOC=YES' BEFORE ANYTHING and then write the passage ONLY, NO OTHER TEXT (GREETINGS, PERMITTING, ETC.) ALLOWED." +
-                        "Your passage must be formal (unless user told you not to) and start with a title." +
+                        "Make sure to provide a FULL passage with ENOUGH words(unless user tell you not to) and start with a title." +
                         "If not, respond accordingly. If unsure, ask the user to clarify. Make full use of the below history chat." +
                         "For example, if latest history includes sth about Windows 10 and user mentions the next version now, you should know he/she means Windows 11" +
                         "This is the last message you sent to your user:" + history_1 +
@@ -115,13 +116,18 @@ async function callAI(msg) {
       buffer.push(response.text());
     }
     let message = md.render(buffer.join(''));
-    outContent = message.replace(/Passage_generated:/g, '');
-    newAIMessage(outContent);
-    //newAIMessage(outContent.replace(/INDOC=YES/g, '' ));
+    outContent = message;
     history_1 = outContent;
     history_2 = history_1;
     if (outContent.includes("INDOC=YES")){
-      insertHTML(outContent.replace(/INDOC=YES/g, ' ' ))
+      insertHTML(outContent.replace(/INDOC=YES/g, '' ));
+      isItPassage = true;
+    }
+    if (isItPassage == true) {      
+      newAIMessage(outContent.replace(/INDOC=YES/g,''));
+    }
+    else {
+      newAIMessage(outContent);
     }
   }
   catch(e){
