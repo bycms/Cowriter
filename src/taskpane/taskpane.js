@@ -83,7 +83,7 @@ sendButton.onclick = function () {
     textbox.value = "";
   }
   else{
-    textbox.value = "Enter something here...";
+    textbox.value = "Enter your request here...";
     setTimeout(function (){
       textbox.value = "";
     }, 3000)
@@ -121,7 +121,8 @@ async function callAI(msg) {
     }
     let message = md.render(buffer.join(''));
     outContent = message.replace(/Passage_generated:/g, '');
-    newAIMessage(outContent.replace(/INDOC=YES/g, '' ));
+    newAIMessage(outContent);
+    //newAIMessage(outContent.replace(/INDOC=YES/g, '' ));
     history_1 = outContent;
     history_2 = history_1;
     if (outContent.includes("INDOC=YES")){
