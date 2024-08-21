@@ -36,39 +36,22 @@ body {
     width: 35px;
     border: none;
     border-radius: 17.5px;
-    background-color: rgb(46, 96, 179);
+    background-color: rgb(62, 109, 184);
 }
 
 #chat-input-send:hover {
-    background-color: rgb(14, 61, 138);
-}
-
-#chat-input-file {
-    position: relative;
-    left: 6px;
-    top: -40px;
-    height: 35px;
-    width: 35px;
-    border: none;
-    border-radius: 17.5px;
-    background-color: rgb(143, 175, 226);
-    opacity: 0.6;
-}
-
-#chat-input-file:hover {
-    opacity: 1;
-    background-color: rgb(123,155,206);
+    background-color: rgb(25, 73, 150);
 }
 
 #filename {
     position: relative;
     font-size: 14px;
-    left: 20px;
-    top: -45px;
-    opacity: 0.6;
+    left: 7px;
+    top: -35px;
+    opacity: 0.8;
     border: 0.5px solid grey;
     border-radius: 4px;
-    padding: 5px;
+    padding: 3px;
 }
 
 .system{

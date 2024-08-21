@@ -5,7 +5,6 @@ let welcome = document.getElementsByClassName("system");
 let textbox = document.getElementById("chat-input-text");
 let sendButton = document.getElementById("chat-input-send");
 let selectFile = document.getElementById("file-input");
-let fileButton = document.getElementById("chat-input-file");
 let chatArea = document.getElementById("chat");
 let usermsg = document.getElementsByClassName("user-message");
 let aimsg = document.getElementsByClassName("ai-message");
@@ -47,10 +46,6 @@ function newAIMessage(content){
     aimsg[j].classList.remove("messageshow");
   }, 5000)
   j++;
-}
-
-fileButton.onclick =()=> {
-  selectFile.click();
 }
 
 selectFile.addEventListener("change", function (event) {
