@@ -71,7 +71,7 @@ selectFile.addEventListener("change", function (event) {
 })
 
 sendButton.onclick = function () {
-  if (textbox.value !== ''){
+  if (textbox.value !== '' && textbox.value !== 'Enter your request here...'){
     newUserMessage();
     if (isFileSelected == true) {
       callAI(textbox.value + "...Here's the document to refer on:" + fileContent);
