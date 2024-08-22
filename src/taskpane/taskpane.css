@@ -1,6 +1,10 @@
+html {
+    height: 100%;
+    background: linear-gradient(135deg, rgb(194, 235, 228), rgb(201, 201, 252));
+}
+
 body {
     font-family: 'Segoe UI';
-    background-color: rgb(255, 255, 255);
 }
 
 #chat {
@@ -10,10 +14,9 @@ body {
 #chat-input {
     width: 100%;
     height: 130px;
-    background-color: rgb(203, 218, 233);
+    background: linear-gradient(to right, rgb(200, 233, 252), rgb(129, 176, 236));
     position: fixed;
     border-top: 10px;
-    border-color: rgb(203, 218, 233);
     bottom: 0;
     left: 0;
 }
@@ -36,11 +39,11 @@ body {
     width: 35px;
     border: none;
     border-radius: 17.5px;
-    background-color: rgb(62, 109, 184);
+    background: linear-gradient(45deg, rgb(124, 150, 192), rgb(40, 71, 122));
 }
 
 #chat-input-send:hover {
-    background-color: rgb(25, 73, 150);
+    background: linear-gradient(45deg, rgb(70, 137, 245), rgb(7, 50, 121));
 }
 
 #filename {
@@ -55,22 +58,49 @@ body {
 }
 
 .system{
+    border: 4px solid transparent;
+    border-radius: 10px;
     position: relative;
-    border: 3px solid;
-    border-image: linear-gradient(to right, rgb(94, 18, 77), rgb(147, 112, 219)) 1;
-    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.7);
+    background-clip: padding-box;
     max-width: 90%;
     text-align: center;
+    padding: 5px;
+}
+
+.system-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    margin: -3px;
+    border-radius: inherit;
+    background: linear-gradient(to right, #9313dd, #d11b85);
 }
 
 .user-message {
+    border: 4px solid transparent;
+    border-radius: 16px;
     position: relative;
-    border: 3px solid;
-    border-image: linear-gradient(to right, rgb(100, 149, 237), rgb(42, 24, 141)) 1;
-    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.7);
+    background-clip: padding-box;
     max-width: 90%;
     text-align: right;
-    padding: 8px;
+    padding: 10px;
+}
+
+.user-message-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    margin: -3px;
+    border-radius: inherit;
+    background: linear-gradient(to right, #068158, #578aef);
 }
 
 .messageshow {
@@ -90,13 +120,24 @@ body {
 }
 
 .ai-message {
+    border: 4px solid transparent;
+    border-radius: 16px;
     position: relative;
-    border: 3px solid;
-    border-image: linear-gradient(to right, rgb(31, 119, 78), rgb(21, 64, 114)) 1;
-    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.7);
+    background-clip: padding-box;
     max-width: 90%;
     text-align: left;
-    padding: 8px;
-    bottom: 200px;
-    top: 10px;
+    padding: 5px;
+}
+
+.ai-message-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    margin: -4px;
+    border-radius: inherit;
+    background: linear-gradient(to right, #124a94, #4c1a9c);
 }

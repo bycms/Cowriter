@@ -18,6 +18,7 @@ let history_1 = '', history_2 = '';
 const fileReader = new FileReader();
 let fileContent;
 let isFileSelected = false;
+let willReplace = false;
 
 Office.onReady((info) => {
   if (info.host === Office.HostType.Word) {
@@ -33,7 +34,7 @@ fileReader.onload = function(e) {
 
 //Add new user message to chat area
 function newUserMessage() {
-  chatArea.innerHTML += '<br><div class="user-message messageshow">' + textbox.value + '</div>';
+  chatArea.innerHTML += '<br><div class="user-message messageshow"><div class="user-message-bg"></div>' + textbox.value + '</div>';
  
   setTimeout(function(){
     usermsg[i].classList.remove("messageshow");
@@ -43,7 +44,7 @@ function newUserMessage() {
 
 //Add new response to chat area
 function newAIMessage(content){
-  chatArea.innerHTML += '<div class="ai-message messageshow"><p>' + content + '</p></div><br><br><hr><hr><br><br><br>'
+  chatArea.innerHTML += '<br/><div class="ai-message messageshow"><div class="ai-message-bg"></div>' + content + '</div><br><br><hr><hr><br><br><br>'
 
   setTimeout(function(){
     aimsg[j].classList.remove("messageshow");
@@ -150,7 +151,6 @@ async function callAI(msg) {
 export async function insertHTML(html) {
   return Word.run(async (context) => {
     let paragraph = '';
-    // insert a paragraph at the end of the document.
     paragraph = context.document.body.insertHtml(html, Word.InsertLocation.end);
     
     await context.sync();
