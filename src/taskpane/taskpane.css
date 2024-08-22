@@ -21,6 +21,16 @@ body {
     left: 0;
 }
 
+#inputPane {
+    width: 90%;
+}
+
+#controlPane {
+    position: relative;
+    left: 85%;
+    width: 10%;
+}
+
 #chat-input-text {
     font-family: 'Segoe UI';
     position: relative;
@@ -33,8 +43,8 @@ body {
 
 #chat-input-send {
     position: relative;
-    left: 7px;
-    top: -70px;
+    left: 5px;
+    top: -120px;
     height: 35px;
     width: 35px;
     border: none;
@@ -46,11 +56,26 @@ body {
     background: linear-gradient(45deg, rgb(70, 137, 245), rgb(7, 50, 121));
 }
 
+#reloadAll {
+    position: relative;
+    left: 5px;
+    top: -115px;
+    height: 35px;
+    width: 35px;
+    border: none;
+    border-radius: 17.5px;
+    background: linear-gradient(45deg, rgb(124, 150, 192), rgb(40, 71, 122));
+}
+
+#reloadAll:hover {
+    background: linear-gradient(45deg, rgb(70, 137, 245), rgb(7, 50, 121));
+}
+
 #filename {
     position: relative;
     font-size: 14px;
     left: 7px;
-    top: -35px;
+    top: -30px;
     opacity: 0.8;
     border: 0.5px solid grey;
     border-radius: 4px;

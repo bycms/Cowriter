@@ -4,6 +4,7 @@ const markdownIt = require('markdown-it');
 let welcome = document.getElementsByClassName("system");
 let textbox = document.getElementById("chat-input-text");
 let sendButton = document.getElementById("chat-input-send");
+let reloadButton = document.getElementById("reloadAll");
 let selectFile = document.getElementById("file-input");
 let chatArea = document.getElementById("chat");
 let usermsg = document.getElementsByClassName("user-message");
@@ -18,7 +19,6 @@ let history_1 = '', history_2 = '';
 const fileReader = new FileReader();
 let fileContent;
 let isFileSelected = false;
-let willReplace = false;
 
 Office.onReady((info) => {
   if (info.host === Office.HostType.Word) {
@@ -155,4 +155,17 @@ export async function insertHTML(html) {
     
     await context.sync();
   });
+}
+
+//Reload page
+reloadButton.onclick =()=> {
+  //utilize variables
+  outContent = '';
+  history_1 = '', history_2 = '';
+  fileContent = '';
+  isFileSelected = false;
+  file_name.textContent = 'Upload your file here';
+
+  //Clear page
+  chatArea.innerHTML = '<div class="system messageshow"><div class="system-bg"></div><p>Thanks for reloading. Lets start a new topic.</p></div>';
 }
