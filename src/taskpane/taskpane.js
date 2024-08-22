@@ -44,7 +44,7 @@ function newUserMessage() {
 
 //Add new response to chat area
 function newAIMessage(content){
-  chatArea.innerHTML += '<br/><div class="ai-message messageshow"><div class="ai-message-bg"></div>' + content + '</div><br><br><hr><hr><br><br><br>'
+  chatArea.innerHTML += '<br/><div class="ai-message messageshow"><div class="ai-message-bg"></div>' + content + '</div>'
 
   setTimeout(function(){
     aimsg[j].classList.remove("messageshow");
@@ -139,11 +139,19 @@ async function callAI(msg) {
     } else {
       newAIMessage(outContent.replace(/INDOC=YES/g, '' ));//Taskpane response
     }
+    //scroll to bottom
+    window.scrollTo({
+      bottom: 0,
+      behavior: "smooth",
+    });
     selectFile.value = '';
     file_name.textContent = 'Upload your file here';//Reset file selection
   }
   catch(e){
-    newAIMessage(e);
+    newAIMessage('Sorry, but something went wrong. Try checking your network connection or reloading.');
+    setTimeout(function() {
+      reloadButton.click();
+    }, 2000)
   }
 }
 
