@@ -1,6 +1,7 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const markdownIt = require('markdown-it');
 
+let thisPage = document.documentElement;
 let welcome = document.getElementsByClassName("system");
 let textbox = document.getElementById("chat-input-text");
 let sendButton = document.getElementById("chat-input-send");
