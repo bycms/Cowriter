@@ -7,8 +7,8 @@ let sendButton = document.getElementById("chat-input-send");
 let reloadButton = document.getElementById("reloadAll");
 let selectFile = document.getElementById("file-input");
 let chatArea = document.getElementById("chat");
-let usermsg = document.getElementsByClassName("user-message");
-let aimsg = document.getElementsByClassName("ai-message");
+let usermsg = document.getElementsByClassName("user-message"); let usermsg_bg = document.getElementsByClassName("user-message-bg");
+let aimsg = document.getElementsByClassName("ai-message"); let aimsg_bg = document.getElementsByClassName("ai-message-bg");
 let file_name = document.getElementById("filename");
 let API_KEY = 'AIzaSyD8IWCVHh3DMxPcN0BjKG-rpXXnIFlll2s';
 let i=-1;  let j=-1;
@@ -34,20 +34,22 @@ fileReader.onload = function(e) {
 
 //Add new user message to chat area
 function newUserMessage() {
-  chatArea.innerHTML += '<br><div class="user-message messageshow"><div class="user-message-bg"></div>' + textbox.value + '</div>';
+  chatArea.innerHTML += '<br><div class="user-message messageshow"><div class="user-message-bg messageshow"></div>' + textbox.value + '</div>';
  
   setTimeout(function(){
     usermsg[i].classList.remove("messageshow");
+    usermsg_bg[i].classList.remove("messageshow");
   }, 1000)
   i++;
 }
 
 //Add new response to chat area
 function newAIMessage(content){
-  chatArea.innerHTML += '<br/><div class="ai-message messageshow"><div class="ai-message-bg"></div>' + content + '</div>'
+  chatArea.innerHTML += '<br/><div class="ai-message messageshow"><div class="ai-message-bg messageshow"></div>' + content + '</div>'
 
   setTimeout(function(){
     aimsg[j].classList.remove("messageshow");
+    aimsg_bg[j].classList.remove("messageshow");
   }, 5000)
   j++;
 }
