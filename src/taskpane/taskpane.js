@@ -139,11 +139,6 @@ async function callAI(msg) {
     } else {
       newAIMessage(outContent.replace(/INDOC=YES/g, '' ));//Taskpane response
     }
-    //scroll to bottom
-    window.scrollTo({
-      bottom: 0,
-      behavior: "smooth",
-    });
     selectFile.value = '';
     file_name.textContent = 'Upload your file here';//Reset file selection
   }
