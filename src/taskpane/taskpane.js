@@ -162,13 +162,5 @@ export async function insertHTML(html) {
 
 //Reload page
 reloadButton.onclick =()=> {
-  //utilize variables
-  outContent = '';
-  history_1 = '', history_2 = '';
-  fileContent = '';
-  isFileSelected = false;
-  file_name.textContent = 'Upload your file here';
-
-  //Clear page
-  chatArea.innerHTML = '<div class="system messageshow"><div class="system-bg"></div><p>Thanks for reloading. Lets start a new topic.</p></div>';
+  location.reload();
 }
