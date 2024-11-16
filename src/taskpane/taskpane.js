@@ -110,7 +110,7 @@ async function callAI(msg) {
       history: [{
         role: "user",
         parts: [{ text: "You are a writing assistant in Microsoft Word. Follow the user's instructions unless illegal. " +
-                        "If asked to write or edit a passage, begin your response with 'INDOC=YES' BEFORE ANYTHING and then write the passage ONLY, NO OTHER TEXT (GREETINGS, PERMITTING, ETC.) ALLOWED." +
+                        "If asked to write or edit a passage(especially when user starts with 'write a passage about...'), begin your response with 'INDOC=YES' BEFORE ANYTHING and then write the passage ONLY, NO OTHER TEXT (GREETINGS, PERMITTING, ETC.) ALLOWED." +
                         "Make sure to provide a FULL passage with ENOUGH words(unless user tell you not to) and start with a title." +
                         "If not, respond accordingly. If unsure, ask the user to clarify. Make full use of the below history chat." +
                         "For example, if latest history includes sth about Windows 10 and user mentions the next version now, you should know he/she means Windows 11" +
@@ -137,13 +137,13 @@ async function callAI(msg) {
     history_1 = outContent;
     history_2 = history_1;
     if (outContent.includes("INDOC=YES")){
-      insertHTML(outContent.replace(/INDOC=YES/g, '' ));//Word response
+      insertHTML(outContent.replace(/INDOC=YES/g, '' )); //Word response
       newAIMessage('Done. Feel free to let me edit!');
     } else {
-      newAIMessage(outContent.replace(/INDOC=YES/g, '' ));//Taskpane response
+      newAIMessage(outContent.replace(/INDOC=YES/g, '' )); //Taskpane response
     }
     selectFile.value = '';
-    file_name.textContent = 'Upload your file here';//Reset file selection
+    file_name.textContent = 'Upload your file here'; //Reset file selection
   }
   catch(e){
     newAIMessage('Sorry, but something went wrong. Try checking your network connection or reloading.');

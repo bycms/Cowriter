@@ -102,7 +102,6 @@ body {
     z-index: -1;
     margin: -3px;
     border-radius: inherit;
-    background: linear-gradient(to right, #9313dd, #d11b85);
 }
 
 .user-message {
