@@ -9807,6 +9807,7 @@ let history_1 = '', history_2 = '';
 const fileReader = new FileReader();
 let fileContent;
 let isFileSelected = false;
+let lastFill = '';
 
 Office.onReady((info) => {
   if (info.host === Office.HostType.Word) {
@@ -9923,11 +9924,16 @@ async function callAI(msg) {
     outContent = message;
     history_1 = outContent;
     history_2 = history_1;
-    if (outContent.includes("INDOC=YES")){
-      insertHTML(outContent.replace(/INDOC=YES/g, '' )); //Word response
+    if (outContent.includes("INDOC=YES") && lastFill == ''){
+      insertHTML(outContent.replace(/INDOC=YES/g, '' ), "add"); //Word response
       newAIMessage('Done. Feel free to let me edit!');
-    } else {
-      newAIMessage(outContent.replace(/INDOC=YES/g, '' )); //Taskpane response
+    }
+      else if (outContent.includes("INDOC=YES") && lastFill !== ''){
+        insertHTML(outContent.replace(/INDOC=YES/g, '' ), "replaceOld");
+        newAIMessage('Done. Feel free to let me edit!');
+    }
+      else {
+        newAIMessage(outContent.replace(/INDOC=YES/g, '' )); //Taskpane response
     }
     selectFile.value = '';
     file_name.textContent = 'Upload your file here'; //Reset file selection
@@ -9941,12 +9947,42 @@ async function callAI(msg) {
 }
 
 //Insert HTML to Word
-async function insertHTML(html) {
+async function insertHTML(html, p) {
   return Word.run(async (context) => {
-    let paragraph = '';
-    paragraph = context.document.body.insertHtml(html, Word.InsertLocation.end);
-    
-    await context.sync();
+    switch (p) {
+      case "add":
+        let paragraph = '';
+        paragraph = context.document.body.insertHtml(html, Word.InsertLocation.end);
+        lastFill = html;
+
+        await context.sync();
+      case "replaceOld":
+        let searchResults = body.search(lastFill, { matchCase: false, matchWholeWord: false });
+        context.load(searchResults, '');
+        return context.sync().then(function () {
+          var range = searchResults.items[searchResults.length - 1];
+          range.insertText(html, Word.InsertLocation.replace);
+        });
+        lastFill = html;
+
+        await context.sync();
+    }
+        /*
+        let paragraph = '';
+        paragraph = context.document.body.insertHtml(html, Word.InsertLocation.end);
+
+        await context.sync();*/
+        /*let body = context.document.body;
+        let searchResults = body.search("Hello", { matchCase: false, matchWholeWord: true });
+        context.load(searchResults, 'text');
+        return context.sync().then(function () {
+            for (let i = 0; i < searchResults.items.length; i++) {
+                var range = searchResults.items[i];
+                range.insertText("Hi", Word.InsertLocation.replace);
+                range.font.bold = true;
+            }
+        });
+        */
   });
 }
 
