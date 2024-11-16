@@ -1,6 +1,6 @@
 html {
     height: 100%;
-    background: linear-gradient(135deg, rgb(194, 235, 228), rgb(201, 201, 252));
+    background: linear-gradient(135deg, rgb(225, 235, 233), rgb(227, 227, 241));
 }
 
 body {
@@ -86,7 +86,7 @@ body {
     border: 2px solid transparent;
     border-radius: 10px;
     position: relative;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: white;
     background-clip: padding-box;
     max-width: 90%;
     text-align: center;

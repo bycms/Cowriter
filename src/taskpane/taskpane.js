@@ -35,7 +35,7 @@ fileReader.onload = function(e) {
 
 //Add new user message to chat area
 function newUserMessage() {
-  chatArea.innerHTML += '<br><div class="user-message messageshow"><div class="user-message-bg messageshow"></div>' + textbox.value + '</div>';
+  chatArea.innerHTML += '<br><div class="user-message messageshow"><div class="user-message-bg messageshow"></div><p>' + textbox.value + '</p></div>';
  
   setTimeout(function(){
     usermsg[i].classList.remove("messageshow");
@@ -154,7 +154,7 @@ async function callAI(msg) {
 }
 
 //Insert HTML to Word
-export async function insertHTML(html) {
+async function insertHTML(html) {
   return Word.run(async (context) => {
     let paragraph = '';
     paragraph = context.document.body.insertHtml(html, Word.InsertLocation.end);
@@ -165,5 +165,9 @@ export async function insertHTML(html) {
 
 //Reload page
 reloadButton.onclick =()=> {
-  location.reload();
+  document.getElementById('chat-input').style.display = 'none';
+  setTimeout(function() {
+    document.getElementById('chat-input').style.display = 'block';
+  }, 2000)
+  //location.reload();
 }
