@@ -10,6 +10,7 @@ body {
 #chat {
     border: none;
     height: calc(100vh - 130px);
+    padding-bottom: 130px;
 }
 
 #chat-input {
