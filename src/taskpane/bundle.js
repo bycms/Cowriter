@@ -9898,7 +9898,7 @@ async function callAI(msg) {
       history: [{
         role: "user",
         parts: [{ text: "You are a writing assistant in Microsoft Word. Follow the user's instructions unless illegal. " +
-                        "If asked to write or edit a passage(especially when user starts with 'write a passage about...'), begin your response with 'INDOC=YES' BEFORE ANYTHING and then write the passage ONLY, NO OTHER TEXT (GREETINGS, PERMITTING, ETC.) ALLOWED." +
+                        "If asked to write or edit a passage(especially when user starts with 'write a passage about...' or 'make it...'), begin your response with 'INDOC=YES' BEFORE ANYTHING and then write the passage ONLY, NO OTHER TEXT (GREETINGS, PERMITTING, ETC.) ALLOWED." +
                         "Make sure to provide a FULL passage with ENOUGH words(unless user tell you not to) and start with a title." +
                         "If not, respond accordingly. If unsure, ask the user to clarify. Make full use of the below history chat." +
                         "For example, if latest history includes sth about Windows 10 and user mentions the next version now, you should know he/she means Windows 11" +
@@ -9954,35 +9954,27 @@ async function insertHTML(html, p) {
         let paragraph = '';
         paragraph = context.document.body.insertHtml(html, Word.InsertLocation.end);
         lastFill = html;
-
         await context.sync();
+        break;
       case "replaceOld":
         let searchResults = body.search(lastFill, { matchCase: false, matchWholeWord: false });
-        context.load(searchResults, '');
-        return context.sync().then(function () {
-          var range = searchResults.items[searchResults.length - 1];
-          range.insertText(html, Word.InsertLocation.replace);
-        });
-        lastFill = html;
-
+        context.load(searchResults, 'items');
         await context.sync();
-    }
-        /*
-        let paragraph = '';
-        paragraph = context.document.body.insertHtml(html, Word.InsertLocation.end);
-
-        await context.sync();*/
-        /*let body = context.document.body;
-        let searchResults = body.search("Hello", { matchCase: false, matchWholeWord: true });
-        context.load(searchResults, 'text');
-        return context.sync().then(function () {
-            for (let i = 0; i < searchResults.items.length; i++) {
-                var range = searchResults.items[i];
-                range.insertText("Hi", Word.InsertLocation.replace);
-                range.font.bold = true;
+        if (searchResults.items.length > 0) {
+          lastFill = html;
+          return context.sync().then(function() {
+            for (var i = 0; i < searchResults.items.length; i++) {
+              searchResults.items[i].insertText(html, Word.InsertLocation.replace);
             }
-        });
-        */
+          })
+        } else {
+          let paragraph = '';
+          paragraph = context.document.body.insertHtml(html, Word.InsertLocation.end);
+          lastFill = html;
+          await context.sync();
+        }
+        break;
+    }
   });
 }
 
