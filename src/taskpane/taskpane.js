@@ -111,7 +111,7 @@ async function callAI(msg) {
       history: [{
         role: "user",
         parts: [{ text: "You are a writing assistant in Microsoft Word. Follow the user's instructions unless illegal. " +
-                        "If asked to write or edit a passage(especially when user starts with 'write a passage about...'), begin your response with 'INDOC=YES' BEFORE ANYTHING and then write the passage ONLY, NO OTHER TEXT (GREETINGS, PERMITTING, ETC.) ALLOWED." +
+                        "If asked to write or edit a passage(especially when user starts with 'write a passage about...' or 'make it...'), begin your response with 'INDOC=YES' BEFORE ANYTHING and then write the passage ONLY, NO OTHER TEXT (GREETINGS, PERMITTING, ETC.) ALLOWED." +
                         "Make sure to provide a FULL passage with ENOUGH words(unless user tell you not to) and start with a title." +
                         "If not, respond accordingly. If unsure, ask the user to clarify. Make full use of the below history chat." +
                         "For example, if latest history includes sth about Windows 10 and user mentions the next version now, you should know he/she means Windows 11" +
@@ -174,10 +174,12 @@ async function insertHTML(html, p) {
         context.load(searchResults, 'items');
         await context.sync();
         if (searchResults.items.length > 0) {
-          var range = searchResults.items[searchResults.items.length - 1];
-          range.insertText(html, Word.InsertLocation.replace);
           lastFill = html;
-          await context.sync();
+          return context.sync().then(function() {
+            for (var i = 0; i < searchResults.items.length; i++) {
+              searchResults.items[i].insertText(html, Word.InsertLocation.replace);
+            }
+          })
         } else {
           let paragraph = '';
           paragraph = context.document.body.insertHtml(html, Word.InsertLocation.end);
