@@ -167,35 +167,25 @@ async function insertHTML(html, p) {
         let paragraph = '';
         paragraph = context.document.body.insertHtml(html, Word.InsertLocation.end);
         lastFill = html;
-
         await context.sync();
+        break;
       case "replaceOld":
         let searchResults = body.search(lastFill, { matchCase: false, matchWholeWord: false });
-        context.load(searchResults, '');
-        return context.sync().then(function () {
-          var range = searchResults.items[searchResults.length - 1];
-          range.insertText(html, Word.InsertLocation.replace);
-        });
-        lastFill = html;
-
+        context.load(searchResults, 'items');
         await context.sync();
+        if (searchResults.items.length > 0) {
+          var range = searchResults.items[searchResults.items.length - 1];
+          range.insertText(html, Word.InsertLocation.replace);
+          lastFill = html;
+          await context.sync();
+        } else {
+          let paragraph = '';
+          paragraph = context.document.body.insertHtml(html, Word.InsertLocation.end);
+          lastFill = html;
+          await context.sync();
+        }
+        break;
     }
-        /*
-        let paragraph = '';
-        paragraph = context.document.body.insertHtml(html, Word.InsertLocation.end);
-
-        await context.sync();*/
-        /*let body = context.document.body;
-        let searchResults = body.search("Hello", { matchCase: false, matchWholeWord: true });
-        context.load(searchResults, 'text');
-        return context.sync().then(function () {
-            for (let i = 0; i < searchResults.items.length; i++) {
-                var range = searchResults.items[i];
-                range.insertText("Hi", Word.InsertLocation.replace);
-                range.font.bold = true;
-            }
-        });
-        */
   });
 }
 
