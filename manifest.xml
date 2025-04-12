@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
-  <Id>885fe1b9-2934-4bc7-ba8b-f17c4b9c1706</Id>
+  <Id>97a97391-154e-4680-899d-980283badf68</Id>
   <Version>1.0.0.0</Version>
   <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="Cowriter"/>
+  <DisplayName DefaultValue="Spark"/>
   <Description DefaultValue="A template to get started."/>
   <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
@@ -72,13 +72,13 @@
         <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
-        <bt:String id="GetStarted.Title" DefaultValue="Get started with the updated Cowriter!"/>
-        <bt:String id="CommandsGroup.Label" DefaultValue="GenAI"/>
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Cowriter"/>
+        <bt:String id="GetStarted.Title" DefaultValue="Get started with your sample add-in!"/>
+        <bt:String id="CommandsGroup.Label" DefaultValue="Commands Group"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Show Task Pane"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="GetStarted.Description" DefaultValue="Cowriter loaded successfully. Try it out at taskpane/Cowriter!"/>
-        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Experience the GenAI integrated into Word."/>
+        <bt:String id="GetStarted.Description" DefaultValue="Your sample add-in loaded successfully. Go to the HOME tab and click the 'Show Task Pane' button to get started."/>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane"/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>

@@ -1,4 +1,4 @@
-const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { OpenAI } = require('openai');
 const markdownIt = require('markdown-it');
 
 let thisPage = document.documentElement;
@@ -11,7 +11,6 @@ let chatArea = document.getElementById("chat");
 let usermsg = document.getElementsByClassName("user-message"); let usermsg_bg = document.getElementsByClassName("user-message-bg");
 let aimsg = document.getElementsByClassName("ai-message"); let aimsg_bg = document.getElementsByClassName("ai-message-bg");
 let file_name = document.getElementById("filename");
-let API_KEY = 'AIzaSyD8IWCVHh3DMxPcN0BjKG-rpXXnIFlll2s';
 let i=-1;  let j=-1;
 setTimeout(function(){welcome[0].classList.remove('messageshow')},1000);
 
@@ -21,6 +20,10 @@ const fileReader = new FileReader();
 let fileContent;
 let isFileSelected = false;
 let lastFill = '';
+
+const acckey = prompt("Enter your github acckey");
+const endpoint = "https://models.inference.ai.azure.com";
+const modelName = "gpt-4o";
 
 Office.onReady((info) => {
   if (info.host === Office.HostType.Word) {
@@ -83,79 +86,73 @@ document.addEventListener("keydown", function (event) {
 
 //Prepare and send user message to AI
 sendButton.onclick = function () {
-  if (textbox.value !== '' && textbox.value !== 'Enter your request here...'){
+  console.log("Send button clicked"); // Log to verify button click
+  if (textbox.value !== '' && textbox.value !== 'Enter your request here...') {
+    console.log("Textbox has valid input"); // Log to verify valid input
     newUserMessage();
     if (isFileSelected == true) {
+      console.log("File is selected, calling AI with file content"); // Log file selection
       callAI(textbox.value + "...Here's the document to refer on:" + fileContent);
-    }
-    else{
+    } else {
+      console.log("No file selected, calling AI with textbox input"); // Log no file selection
       callAI(textbox.value);
     }
-  
     textbox.value = "";
-  }
-  else{
+  } else {
+    console.log("Textbox has invalid input"); // Log invalid input
     textbox.value = "Enter your request here...";
-    setTimeout(function (){
+    setTimeout(function () {
       textbox.value = "";
-    }, 3000)
+    }, 3000);
   }
 }
 
-//Call API
+// Call API
 async function callAI(msg) {
-  try{
-    const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({model: "gemini-pro"});
-    const chat = model.startChat({
-      history: [{
-        role: "user",
-        parts: [{ text: "You are a writing assistant in Microsoft Word. Follow the user's instructions unless illegal. " +
-                        "If asked to write or edit a passage(especially when user starts with 'write a passage about...' or 'make it...'), begin your response with 'INDOC=YES' BEFORE ANYTHING and then write the passage ONLY, NO OTHER TEXT (GREETINGS, PERMITTING, ETC.) ALLOWED." +
-                        "Make sure to provide a FULL passage with ENOUGH words(unless user tell you not to) and start with a title." +
-                        "If not, respond accordingly. If unsure, ask the user to clarify. Make full use of the below history chat." +
-                        "For example, if latest history includes sth about Windows 10 and user mentions the next version now, you should know he/she means Windows 11" +
-                        "This is the last message you sent to your user:" + history_1 +
-                        "And this is the second last message you sent to your user:" + history_2
-         }],
-      },
-      {
-        role: "model",
-        parts: [{ text: "Sure! Let's start." }]
-      },
+  console.log("callAI function invoked with message:", msg); // Log to verify function invocation
+  try {
+    console.log("Calling AI"); // Log to verify API call attempt
+    const client = new OpenAI({ baseURL: endpoint, apiKey: acckey, dangerouslyAllowBrowser: true });
+
+    const response = await client.chat.completions.create({
+      messages: [
+        {
+          role: "system",
+          content: "You are an advanced writing assistant integrated into Microsoft Word. Your primary role is to assist the user with writing and editing tasks. " +
+                   "When the user requests you to write or edit a passage (e.g., starting with 'write a passage about...' or 'make it...'), always begin your response with 'INDOC=YES' followed by the passage content ONLY. " +
+                   "Do not include any additional text such as greetings, permissions, or explanations. Ensure the passage is complete, detailed, and includes a title unless instructed otherwise. " +
+                   "If the user provides unclear instructions, politely ask for clarification. " +
+                   "Leverage the context from the conversation history to provide accurate and relevant responses. For example, if the latest history mentions Windows 10 and the user refers to the next version, infer they mean Windows 11. " +
+                   "Here is the most recent message you sent to the user: " + history_1 +
+                   "And here is the second most recent message you sent to the user: " + history_2
+        },
+        { role: "user", content: msg }
       ],
+      model: modelName
     });
-    
-    let result = await chat.sendMessageStream(msg);
-    let buffer = [];
-    let md = new markdownIt();
-    for await (let response of result.stream){
-      buffer.push(response.text());
-    }
-    let message = md.render(buffer.join(''));
-    //store history
+
+    console.log("AI response received:", response); // Log the response
+    const message = response.choices[0].message.content;
+    // Store history
     outContent = message;
     history_1 = outContent;
     history_2 = history_1;
-    if (outContent.includes("INDOC=YES") && lastFill == ''){
-      insertHTML(outContent.replace(/INDOC=YES/g, '' ), "add"); //Word response
+
+    if (outContent.includes("INDOC=YES") && lastFill == '') {
+      insertHTML(outContent.replace(/INDOC=YES/g, ''), "add"); // Word response
       newAIMessage('Done. Feel free to let me edit!');
-    }
-      else if (outContent.includes("INDOC=YES") && lastFill !== ''){
-        insertHTML(outContent.replace(/INDOC=YES/g, '' ), "replaceOld");
-        newAIMessage('Done. Feel free to let me edit!');
-    }
-      else {
-        newAIMessage(outContent.replace(/INDOC=YES/g, '' )); //Taskpane response
+    } else if (outContent.includes("INDOC=YES") && lastFill !== '') {
+      insertHTML(outContent.replace(/INDOC=YES/g, ''), "replaceOld");
+      newAIMessage('Done. Feel free to let me edit!');
+    } else {
+      newAIMessage(outContent.replace(/INDOC=YES/g, '')); // Taskpane response
     }
     selectFile.value = '';
-    file_name.textContent = 'Upload your file here'; //Reset file selection
-  }
-  catch(e){
-    newAIMessage('Sorry, but something went wrong. Try checking your network connection or reloading.');
-    setTimeout(function() {
-      reloadButton.click();
-    }, 2000)
+    file_name.textContent = 'Upload your file here'; // Reset file selection
+  } catch (e) {
+    console.error("Error in callAI:", e); // Log the error
+    newAIMessage('Sorry, but something went wrong. Try checking your network connection or reloading.' + e);
+    console.error(e); // Log the error for debugging
   }
 }
 
@@ -189,13 +186,4 @@ async function insertHTML(html, p) {
         break;
     }
   });
-}
-
-//Reload page
-reloadButton.onclick =()=> {
-  document.getElementById('chat-input').style.display = 'none';
-  setTimeout(function() {
-    document.getElementById('chat-input').style.display = 'block';
-  }, 2000)
-  //location.reload();
 }

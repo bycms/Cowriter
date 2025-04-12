@@ -1,43 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cowriter</title>
-
-    <!-- Office JavaScript API -->
-    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
-
-    <!-- Template styles -->
-    <link href="./taskpane.css" rel="stylesheet" type="text/css" />
-</head>
-
-<body>
-    <div id="title">
-    <h2 style="color: rgb(2, 37, 37);">Welcome to Cowriter</h2><hr/>
-    </div>
-    <div id="chat">
-        <div class="system messageshow"><div class="system-bg"></div><p>Begin your prompt with "Write a passage about" to get in-document answer.</p></div>
-    </div>
-    <div id="chat-input">
-        <div id="inputPane">
-            <textarea id="chat-input-text" placeholder="Press Enter to change line, Ctrl+Enter to send." cols="40" rows="6"></textarea>
-            <label id="filename" for="file-input" max-length="15">Upload your file here</label>
-            <input type="file" id="file-input" style="display: none;" accept=".doc,.docx,.pdf,.txt,.xls,.xlsx,.ppt,.pptx,.pps,.ppsx,.pptm,.ppsm,
-                .htm, .html,.css, .js,.py,.cpp,.cs,.rb,.java,.php,.xml,.json,.md,.sql,.go,.swift,.vb,.m,.cs,
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Cowriter</title>
+        <!-- Office JavaScript API -->
+        <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+        <!-- Template styles -->
+        <link href="./taskpane.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="title" class="glass-effect">
+            <h2>Welcome to Cowriter</h2>
+            <hr />
+        </div>
+        <div id="chat" class="glass-effect">
+            <div class="system messageshow">
+                <div class="system-bg"></div>
+                <p>Begin your prompt with "Write a passage about" to get in-document answer.</p>
+            </div>
+        </div>
+        <div id="chat-input" class="glass-effect">
+            <div id="inputPane">
+                <textarea id="chat-input-text" placeholder="Press Enter to change line, Ctrl+Enter to send." cols="40" rows="6"></textarea>
+                <label id="filename" for="file-input" max-length="15">Upload your file here</label>
+                <input type="file" id="file-input" style="display: none;" accept=".doc,.docx,.pdf,.txt,.xls,.xlsx,.ppt,.pptx,.pps,.ppsx,.pptm,.ppsm,
+                .htm, .html,.css,.js,.py,.cpp,.cs,.rb,.java,.php,.xml,.json,.md,.sql,.go,.swift,.vb,.m,.cs,
                 .rs,.lua,.sh,.bat,.ps1,.vbs,.pl,.c, .h">
+            </div>
+            <div id="controlPane">
+                <button id="chat-input-send"><img src="./send.png" alt="Send"></button>
+                <button id="reloadAll"><img src="./reload.png" alt="Reload"></button>
+            </div>
         </div>
-        <div id="controlPane">
-            <button id="chat-input-send"><img src="./send.png" alt="Send"></button>
-            <button id="reloadAll"><img src="./reload.png" alt="Reload"></button>
-        </div>
-    </div>
-
-</body>
-
-<script type="module" src="./taskpane.js"></script>
-<script src="./bundle.js"></script>
-
+        <!-- Scripts placed at the end for better page load performance -->
+        <script type="module" src="./taskpane.js"></script>
+        <script src="./bundle.js"></script>
+    </body>
 </html>
