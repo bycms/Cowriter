@@ -21,7 +21,13 @@ let fileContent;
 let isFileSelected = false;
 let lastFill = '';
 
-const acckey = prompt("Enter your github acckey");
+let acckey = localStorage.getItem("github_acckey");
+if (!acckey) {
+  acckey = prompt("Enter your github acckey");
+  if (acckey) {
+    localStorage.setItem("github_acckey", acckey);
+  }
+}
 const endpoint = "https://models.inference.ai.azure.com";
 const modelName = "gpt-4o";
 
