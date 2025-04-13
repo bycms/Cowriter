@@ -23,9 +23,16 @@ let lastFill = '';
 
 let acckey = localStorage.getItem("github_acckey");
 if (!acckey) {
-  acckey = prompt("Enter your github acckey");
-  if (acckey) {
-    localStorage.setItem("github_acckey", acckey);
+  document.getElementById("modal").style.display = "flex";
+}
+
+function saveKey() {
+  const key = document.getElementById("keyInput").value;
+  if (key) {
+    localStorage.setItem("github_acckey", key);
+    document.getElementById("modal").style.display = "none";
+    // Optionally reload or continue app flow here
+    location.reload();
   }
 }
 const endpoint = "https://models.inference.ai.azure.com";
