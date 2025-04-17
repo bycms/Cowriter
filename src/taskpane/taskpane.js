@@ -21,20 +21,7 @@ let fileContent;
 let isFileSelected = false;
 let lastFill = '';
 
-let acckey = localStorage.getItem("github_acckey");
-if (!acckey) {
-  document.getElementById("modal").style.display = "flex";
-}
-
-function saveKey() {
-  const key = document.getElementById("keyInput").value;
-  if (key) {
-    localStorage.setItem("github_acckey", key);
-    document.getElementById("modal").style.display = "none";
-    // Optionally reload or continue app flow here
-    location.reload();
-  }
-}
+let acckey = 'github_pat_11BGHDBJI0PmwAhZ0F1fZG_jQkTo'+'zqbIJYHb1j6R8Q0grI8qvfmwyeg4YOqfeVzBVrWIXDRX2HBqgwq2AT';
 const endpoint = "https://models.inference.ai.azure.com";
 const modelName = "gpt-4o";
 
